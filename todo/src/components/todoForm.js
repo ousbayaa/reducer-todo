@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 export function TodoForm (props) {
-    const [form, setForm] = useState ('')
+    const [form, setForm] = useState('')
     return (
         <form onSubmit={(event) => {
-        event.preventDefault()
+            event.preventDefault()
             props.addTodo(form)
             setForm('')
         }}>
@@ -12,7 +12,7 @@ export function TodoForm (props) {
             name='todo'
             placeholder='Add todo'
             value={form}
-            onchange={(event)=> {
+            onChange={(event) => {
                 setForm(event.target.value)
             }} />
             <button type='submit'>Add</button>

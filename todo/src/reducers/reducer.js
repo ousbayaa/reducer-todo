@@ -1,10 +1,9 @@
-export const initialState = {
-    todoList: [
+export const initialState = [
       {item: 'Understand reducers',
       completed: false,
       id: 1234}
     ]
-  }
+  
   
   export function reducer(state, action) {
     switch(action.type) {
@@ -15,9 +14,14 @@ export const initialState = {
             ]
             case "COMPLETED_TODO":
                 return state.map((item) => {
-                    return item.id === action.payload ?
-                    {...item, completed: !item.completed} :
-                    item
+                    if (item.id === action.payload) {
+                        return {
+                            ...item,
+                            completed: !item.completed
+                        }
+                    } else {
+                        return item;
+                    }
                 })
                 case "CLEAR_COMPLETED_TODO": 
                 return state.filter((item) => !item.completed)

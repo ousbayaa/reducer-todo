@@ -1,12 +1,38 @@
-import React from 'react';
+import React, {useReducer} from 'react';
+import {TodoForm} from './components/TodoForm';
+import {TodoList} from './components/TodoList';
+import {initialState, reducer} from './reducers/reducer';
 import './App.css';
-import todoform  from './components/todoform.js'
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  console.log(state)
+  const addTodo = (input) => {
+    const newTodo = {
+      todo: input,
+      completed: false,
+      id: Math.random()
+    }
+    dispatch({type: 'ADD_TODO', payload: newTodo})
+  }
+
+  const handleCompleted = (id) => {
+    dispatch({type: 'COMPLETED_TODO', payload: id})
+  }
+  
+  const clearCompleted = () => {
+    dispatch({type: 'CLEAR_COMPLETED_TODO'})
+  }
+  
   return (
     <div className="App">
-    <h1>ToDo List</h1>
-    <todoForm />
+      <h2>Welcome, add a Todo!</h2>
+     <TodoForm addTodo={addTodo} />
+     <TodoList state={state} handleCompleted={handleCompleted} />
+     <button onClick={(event) => {
+     event.preventDefault()
+     clearCompleted()
+     }}>Clear</button>
     </div>
   );
 }
